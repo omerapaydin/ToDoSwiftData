@@ -65,5 +65,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    ContentView().modelContainer(for:[ToDo.self])
 }
