@@ -25,7 +25,7 @@ struct ToDoSwiftDataApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            AddToDoScreen()
         }
         .modelContainer(sharedModelContainer)
     }
