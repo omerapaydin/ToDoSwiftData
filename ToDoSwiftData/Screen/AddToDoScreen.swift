@@ -18,7 +18,23 @@ struct AddToDoScreen: View {
             Form {
                 TextField("Name",text: $name)
                 TextField("Priority", value: $priority,format: .number)
-            }
+            }.navigationTitle("Add ToDo")
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button(action: {
+                            //dismiss
+                        }) {
+                            Text("Cancel")
+                        }
+                    }
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button(action: {
+                            //save
+                        }) {
+                            Text("Save")
+                        }
+                    }
+                }
         }
     }
 
