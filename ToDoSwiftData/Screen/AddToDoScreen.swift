@@ -10,8 +10,17 @@ import SwiftData
 
 struct AddToDoScreen: View {
     
+    @Environment(\.modelContext) private var context
+    @Environment(\.dismiss) private var dismiss
+    
     @State private var name : String = ""
     @State private var priority : Int?
+    
+    private var isValid: Bool {
+        !name.trimmingCharacters(in: .whitespaces).isEmpty && priority != nil
+    }
+    
+    
    
     var body: some View {
         NavigationStack {
@@ -22,17 +31,26 @@ struct AddToDoScreen: View {
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         Button(action: {
-                            //dismiss
+                            dismiss()
                         }) {
                             Text("Cancel")
                         }
                     }
                     ToolbarItem(placement: .topBarTrailing) {
                         Button(action: {
-                            //save
+                           
+                            let toDo = ToDo(name: name, priority: priority ?? 0)
+                            do{
+                                try? context.save()
+                            }catch{
+                                print(error.localizedDescription)
+                            }
+                            dismiss()
+                            
+                            
                         }) {
                             Text("Save")
-                        }
+                        }.disabled(!isValid)
                     }
                 }
         }
