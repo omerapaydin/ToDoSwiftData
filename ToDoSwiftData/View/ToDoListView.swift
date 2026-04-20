@@ -11,7 +11,7 @@ import SwiftData
 struct ToDoListView: View {
     
     let toDos : [ToDo]
-   // @Environment(\.modelContext) private var context
+    @Environment(\.modelContext) private var context
     
     var body: some View {
         List{
@@ -21,7 +21,18 @@ struct ToDoListView: View {
                     Spacer()
                     Text("\(toDo.priority)")
                 }
-            }
+            }.onDelete(perform: { indexSet in
+                indexSet.forEach { index in
+                    let toDo = toDos[index]
+                    context.delete(toDo)
+                    
+                    do{
+                        try context.save()
+                    }catch {
+                        print(error)
+                    }
+                }
+            })
         }
     }
 }
