@@ -6,10 +6,29 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ListScreen: View {
+    
+    @Query(sort: \ToDo.name, order: .forward) private var toDos: [ToDo]
+    @State private var isPresented: Bool = false
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            ToDoListView(toDos: toDos)
+                .toolbar(content: {
+                    ToolbarItem(placement: .topBarTrailing)
+                    {
+                        Button("Add ToDo"){
+                            isPresented = true
+                        }
+                    }
+                }).sheet(isPresented: $isPresented) {
+                    NavigationStack{
+                        AddToDoScreen()
+                    }
+                }
+        }
     }
 }
 

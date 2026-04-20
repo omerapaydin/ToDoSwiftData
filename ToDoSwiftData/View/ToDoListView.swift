@@ -6,13 +6,26 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ToDoListView: View {
+    
+    let toDos : [ToDo]
+   // @Environment(\.modelContext) private var context
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        List{
+            ForEach(toDos){ toDo in
+                    HStack{
+                    Text(toDo.name)
+                    Spacer()
+                    Text("\(toDo.priority)")
+                }
+            }
+        }
     }
 }
 
 #Preview {
-    ToDoListView()
+    ToDoListView(toDos: [ToDo(name:"Test",priority: 123)]).modelContainer(for:[ToDo.self])
 }

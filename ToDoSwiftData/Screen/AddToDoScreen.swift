@@ -40,6 +40,9 @@ struct AddToDoScreen: View {
                         Button(action: {
                            
                             let toDo = ToDo(name: name, priority: priority ?? 0)
+                            
+                            context.insert(toDo)
+                            
                             do{
                                 try? context.save()
                             }catch{
